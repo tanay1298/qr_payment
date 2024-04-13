@@ -1,8 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
-from django.utils.translation import gettext as _
 
-class User(AbstractUser):
+class Member(models.Model):
     USER_TYPES = (
         ('merchant', 'Merchant'),
         ('customer', 'Customer'),
@@ -12,23 +10,11 @@ class User(AbstractUser):
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
-        db_table = 'users'
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name=_('groups'),
-        blank=True,
-        related_name='payment_users_groups'
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_('user permissions'),
-        blank=True,
-        related_name='payment_users_permissions'
-    )
+        db_table = 'members'
 
 class Transaction(models.Model):
-    from_user = models.ForeignKey(User, related_name='sent_transactions', on_delete=models.CASCADE)
-    to_user = models.ForeignKey(User, related_name='received_transactions', on_delete=models.CASCADE)
+    from_member = models.ForeignKey(Member, related_name='sent_transactions', on_delete=models.CASCADE)
+    to_member = models.ForeignKey(Member, related_name='received_transactions', on_delete=models.CASCADE)
     order = models.ForeignKey('Order', related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     STATUS_CHOICES = (
@@ -38,10 +24,12 @@ class Transaction(models.Model):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     timestamp = models.DateTimeField(auto_now_add=True)
-    payment_method = models.CharField(max_length=50)
+    payment_method = models.CharField(max_length=50, null=True)
+    class Meta:
+        db_table = 'transactions'
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     STATUS_CHOICES = (
         ('Created', 'Created'),
@@ -51,3 +39,5 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     timestamp = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
+    class Meta:
+        db_table = 'orders'

@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'qr_payment.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'payment_staging',
+        'NAME': 'payment_db',
         'USER': 'tanayburreja',
         'PASSWORD': '',
         'HOST': 'localhost',

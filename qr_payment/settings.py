@@ -34,6 +34,7 @@ CORS_ALLOWED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'payments',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,10 +81,15 @@ WSGI_APPLICATION = 'qr_payment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'payment_staging',
+        'USER': 'tanayburreja',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation

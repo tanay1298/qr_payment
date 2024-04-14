@@ -90,6 +90,14 @@ generate-qr-code/
 process-payment/
 ```
 
+Unit Tets:
+========
+```bash
+pytest payments/tests/create_orde_view_tests.py
+pytest payments/tests/generate_qr_code_api_tests.py
+pytest payments/tests/process_payment_api_tests.py
+```
+
 Logging:
 ========
 When `DEBUG=True`, all logs will go to console irrespective of any environments

@@ -87,6 +87,14 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'payment_test_db',
+        'USER': 'tanayburreja',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

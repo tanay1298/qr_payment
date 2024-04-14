@@ -118,3 +118,22 @@ def process_payment(request):
             transaction.status = 'Failed'
             transaction.save()
         return JsonResponse({'error': str(e)}, status=500)
+    
+def refund_payment(request):
+        try:
+            data = json.loads(request.body)
+            transaction_id = data.get('transaction_id')
+            amount = data.get('amount')
+            # refund logic here
+            return JsonResponse({'status': 'refunded', 'message': 'Payment refunded successfully', 'transaction_id': transaction_id})
+        except Exception as error:
+            _LOGGER.error('Error in refund_payment API')
+            raise error
+
+def check_payment_status(request):
+    if request.method == 'GET':
+        transaction_id = request.GET.get('transaction_id')
+        # Perform payment status check logic here
+        return JsonResponse({'status': 'success', 'message': 'Payment status checked successfully', 'transaction_id': transaction_id})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)

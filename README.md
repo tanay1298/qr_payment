@@ -1,4 +1,4 @@
-Binance Trade Monitoring
+QR Payment
 ==========
 
 ### Tech Stack

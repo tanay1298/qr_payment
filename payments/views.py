@@ -70,7 +70,7 @@ def generate_qr_code(request):
         )
         transaction.save()
         
-        payment_details = f"Amount: {amount}, Description: {description}"
+        payment_details = f"amount: {amount}, description: {description}, order_id: {order_id}, merchant_id: {merchant_id}, customer_id: {order.member.id}"
         qr = qrcode.make(payment_details)
         qr_filename = 'qr_code.png'
         qr_path = os.path.join(settings.STATICFILES_DIRS[0], qr_filename)
